@@ -9,6 +9,9 @@ public class Upload {
     }
 
     public Upload(String imageName, String imageUrl) {
+        if (imageName.trim().equals("")){
+            imageName="No Name";
+        }
         this.imageName = imageName;
         this.imageUrl = imageUrl;
     }

@@ -8,6 +8,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
@@ -23,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                         // Get a URL to the uploaded content
+
+
                         Toast.makeText(getApplicationContext(),"Image stored Succesful",Toast.LENGTH_LONG).show();
                         Log.d("SAVE", "onSuccess:........................................ ");
 
@@ -123,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         Upload upload=new Upload(imageName,downloadUrl.toString());
 
+                        //Upload upload=new Upload(imageNameEditText.getText().toString().trim(),taskSnapshot.getStorage().getDownloadUrl().toString());
                         String uploadId=databaseReference.push().getKey();
                         databaseReference.child(uploadId).setValue(upload);
 
@@ -131,12 +136,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(),"Not Succesful",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Not Succesful"+exception.getMessage(),Toast.LENGTH_LONG).show();
 
                         // Handle unsuccessful uploads
                         // ...
                     }
-                });
+                }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot taskSnapshot) {
+                double progress=(100*taskSnapshot.getBytesTransferred()/taskSnapshot.getTotalByteCount());
+                progressBar.setProgress((int) progress);
+
+            }
+        });
     }
 
     private void openFileChooser() {

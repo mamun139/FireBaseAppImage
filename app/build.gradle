@@ -37,6 +37,7 @@ dependencies {
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation "androidx.mediarouter:mediarouter:1.1.0"
+    implementation "com.google.android.gms:play-services-auth:18.0.0"
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

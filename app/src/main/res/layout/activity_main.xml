@@ -32,11 +32,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"/>
     <androidx.core.widget.ContentLoadingProgressBar
-        android:visibility="gone"
         android:layout_weight=".16"
         android:layout_gravity="center"
         android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <Button
         android:layout_marginTop="5dp"
